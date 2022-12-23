@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers: [
-          BlocProvider<ListCubit>(create: (context) => ListCubit(ListInitial())),
-          BlocProvider<DetailCubit>(create: (context) => DetailCubit(DetailInitial())),
+          BlocProvider<ListCubit>(create: (context) => ListCubit(ListInitial()),),
+          BlocProvider<DetailCubit>(create: (context) => DetailCubit(DetailInitial()),),
         ],
         child: MaterialApp(
           theme: ThemeData(

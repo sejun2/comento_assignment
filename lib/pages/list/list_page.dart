@@ -99,6 +99,7 @@ class _ListPageState extends State<ListPage> {
                   Navigator.of(context).pushNamed(DetailPage.routeName, arguments: {
                     'id': state.feedDataList?.elementAt(index).id,
                   });
+
                   debugPrint('id :: ${state.feedDataList?.elementAt(index).id}');
                 },),
               ],);
@@ -162,7 +163,7 @@ class _ListPageState extends State<ListPage> {
                          ],
                        )
                    ),
-                  );
+              );
             }
             );
           }) ,

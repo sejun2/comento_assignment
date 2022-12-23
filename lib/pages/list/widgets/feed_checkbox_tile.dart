@@ -18,25 +18,36 @@ class _FeedCheckboxTileState extends State<FeedCheckboxTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          SizedBox( // for removing default margin of CheckBox
-            width: 24,
-            height: 24,
-            child: Checkbox(
-                value: widget.isChecked, onChanged: (value){
-                  setState(() {
-                    widget.isChecked = !widget.isChecked;
-                  });
-              widget.onChanged(value);
-            }),
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Row(
+            children: [
+              SizedBox( // for removing default margin of CheckBox
+                width: 24,
+                height: 24,
+                child: Checkbox(
+                    value: widget.isChecked, onChanged: (value){}),
+              ),
+              const SizedBox(width: 6,),
+              Text(widget.title, style: titleStyle,),
+            ],
           ),
-          const SizedBox(width: 6,),
-          Text(widget.title, style: titleStyle,),
-        ],
-      ),
+        ),
+        Positioned.fill(
+          child: GestureDetector(
+            key: const Key('FeedCheckboxTile_GestureDetector'),
+            child: Container(color: Colors.transparent, ),
+            onTap: (){
+              setState(() {
+                widget.isChecked = !widget.isChecked;
+              });
+              widget.onChanged(widget.isChecked);
+            },
+          ),
+        )
+      ],
     );
   }
 }
