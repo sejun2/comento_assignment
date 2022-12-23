@@ -16,6 +16,8 @@ import '../../cubits/list/list_state.dart';
 import '../../data/models/feed_category.dart';
 
 class ListPage extends StatefulWidget {
+  static var routeName = 'LIST_PAGE';
+
   const ListPage({Key? key}) : super(key: key);
 
   @override
