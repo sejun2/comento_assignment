@@ -1,3 +1,4 @@
+import 'package:comento_assignment/config/app_routes.dart';
 import 'package:comento_assignment/cubits/detail/detail_state.dart';
 import 'package:comento_assignment/cubits/list/list_state.dart';
 import 'package:comento_assignment/di/di_provider.dart';
@@ -20,15 +21,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MultiBlocProvider(providers: [
-        BlocProvider<ListCubit>(create: (context) => ListCubit(ListInitial())),
-        BlocProvider<DetailCubit>(create: (context) => DetailCubit(DetailInitial())),
-      ], child: ListPage()),
-    );
+
+
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<ListCubit>(create: (context) => ListCubit(ListInitial())),
+          BlocProvider<DetailCubit>(create: (context) => DetailCubit(DetailInitial())),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          routes: appRoutes,
+          initialRoute: ListPage.routeName,
+          ),
+        );
   }
 }
 
