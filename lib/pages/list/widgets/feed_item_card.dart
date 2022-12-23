@@ -25,6 +25,7 @@ class FeedItemCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        color: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 21, horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
