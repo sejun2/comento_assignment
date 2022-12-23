@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:comento_assignment/cubits/list/list_cubit.dart';
+import 'package:comento_assignment/pages/detail/detail_page.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_advertise_item_card.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_checkbox_tile.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_item_card.dart';
@@ -95,10 +96,10 @@ class _ListPageState extends State<ListPage> {
               return Column(children: [
                 if (index % 3 == 0 && index != 0) FeedAdvertiseItemCard(adsData: state.adsDataList?.elementAt((index/4).toInt()), onTap: (){}),
                 FeedItemCard(feedData: state.feedDataList?.elementAt(index), filterCategoryList: context.read<ListCubit>().filterCategoryList, onTap: () {
-                  //TODO navigate to detailpage
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                  //
-                  // }));
+                  Navigator.of(context).pushNamed(DetailPage.routeName, arguments: {
+                    'id': state.feedDataList?.elementAt(index).id,
+                  });
+                  debugPrint('id :: ${state.feedDataList?.elementAt(index).id}');
                 },),
               ],);
             }));
