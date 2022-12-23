@@ -1,5 +1,6 @@
 import 'package:comento_assignment/cubits/detail/detail_state.dart';
 import 'package:comento_assignment/cubits/list/list_state.dart';
+import 'package:comento_assignment/di/di_provider.dart';
 import 'package:comento_assignment/pages/list/list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,9 @@ import 'cubits/detail/detail_cubit.dart';
 import 'cubits/list/list_cubit.dart';
 
 void main() {
+  // init di
+  DIProvider.provide();
+
   runApp(const MyApp());
 }
 
