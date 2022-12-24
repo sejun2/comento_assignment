@@ -121,7 +121,9 @@ class _ListPageState extends State<ListPage> {
                 context.read<ListCubit>().toggleHideAds();
               },);
             }else{
-              return const SizedBox.shrink();
+              return FeedSquareButton(title: '광고 가리기', onTap: () {
+                context.read<ListCubit>().toggleHideAds();
+              },);
             }
           }),
           FeedSquareButton(title: '필터', onTap: (){
