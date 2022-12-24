@@ -8,14 +8,18 @@ class FeedSquareButton extends StatelessWidget {
   final borderRadius = const BorderRadius.all(Radius.circular(3));
   final titleStyle = TextStyle(fontFamily: ComentoFont.SPOQA_HAN_SANS, color: const Color(0xffADB5BD), fontSize: 13);
 
-  FeedSquareButton({Key? key, required this.title, required this.onTap}) : super(key: key);
+  EdgeInsets? margin = const EdgeInsets.only(left: 10);
+  EdgeInsets? padding = const EdgeInsets.symmetric(vertical: 4, horizontal: 14);
+
+  FeedSquareButton({Key? key, required this.title, required this.onTap, this.margin, this.padding}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 14),
+        margin: margin,
+        padding: padding,
         decoration: BoxDecoration(
           borderRadius: borderRadius,
           border: Border.all(

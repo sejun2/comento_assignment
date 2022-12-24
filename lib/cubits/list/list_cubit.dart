@@ -97,12 +97,8 @@ class ListCubit extends Cubit<ListState>{
     categoryFilterHashMap = map;
     await fetchList();
   }
-
-  //TODO
-  refresh() async{
-
-  }
-
+  
+  /// 광고 가리기/보이기 토글 함수
   void toggleHideAds() {
     if(state is ListLoaded){
       bool currentHideAds = (state as ListLoaded).hideAds;
