@@ -44,7 +44,10 @@ class ListCubit extends Cubit<ListState>{
     try {
       if(state is ListLoaded){ // 이미 Loaded 상태라면
         final currentState = state as ListLoaded;
-        if(!currentState.canLoadMore) return; //더 로드할 수 없다면 종료
+        if(!currentState.canLoadMore) { //더 로드할 수 없다면 종료
+          emit(currentState.copyWith());
+          return;
+        }
 
         emit(currentState.copyWith(isProcess: true));
 
@@ -53,8 +56,8 @@ class ListCubit extends Cubit<ListState>{
 
         emit((state as ListLoaded).copyWith(
           feedList: feedList, adsList: adsList, isProcess: false,
-          adsDataList: [...?(state as ListLoaded).adsDataList, ...?adsList?.data],
-          feedDataList: [...?(state as ListLoaded).feedDataList, ...?feedList?.data]
+          adsDataList: [...?currentState.adsDataList, ...?adsList?.data],
+          feedDataList: [...?currentState.feedDataList, ...?feedList?.data]
         ));
       }else{ // Loaded 상태가 아니라면 - loadmore 하는것이 아닌 새롭게 load를 하는경우
         emit(ListLoading());

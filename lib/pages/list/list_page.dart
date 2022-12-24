@@ -75,6 +75,11 @@ class _ListPageState extends State<ListPage> {
                   return const Center(child: Text('Something went wrong...'));
                 }
               }, listener: (context, state){
+                // if(state is ListLoaded){
+                //   if(!state.canLoadMore){
+                //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Can not load any more', ), duration: Duration(milliseconds: 700),));
+                //   }
+                // }
               },
               ),
             ),

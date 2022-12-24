@@ -34,6 +34,8 @@ class ListLoaded extends ListState{
   bool isProcess = false;
 
   ListLoaded({required this.feedList, this.adsList, this.feedDataList, this.adsDataList, this.isProcess = false,}){
+    print('listloaded emit');
+
     currentFeedPage = feedList?.currentPage ?? 0;
     feedPageLimit = feedList?.lastPage ?? 0;
 
