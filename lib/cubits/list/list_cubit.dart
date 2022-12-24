@@ -51,10 +51,11 @@ class ListCubit extends Cubit<ListState>{
         final feedList = await _fetchFeedList(page: currentState.currentFeedPage+1, categories: categoryRequest , ord: ordering.toPlainString());
         final adsList = await _fetchAdsList(page: currentState.currentAdsPage+1);
 
-        emit(ListLoaded(
-            feedList: feedList,
-            adsList: adsList, feedDataList: [...?currentState.feedDataList], adsDataList: [...?currentState.adsDataList]
-        , isProcess: false, ));
+        emit((state as ListLoaded).copyWith(
+          feedList: feedList, adsList: adsList, isProcess: false,
+          adsDataList: [...?(state as ListLoaded).adsDataList, ...?adsList?.data],
+          feedDataList: [...?(state as ListLoaded).feedDataList, ...?feedList?.data]
+        ));
       }else{ // Loaded 상태가 아니라면 - loadmore 하는것이 아닌 새롭게 load를 하는경우
         emit(ListLoading());
         final feedList = await _fetchFeedList(page: 1, ord: ordering.toPlainString(), categories: categoryRequest);
@@ -63,8 +64,8 @@ class ListCubit extends Cubit<ListState>{
         emit(ListLoaded(
             feedList: feedList,
             adsList: adsList,
-            feedDataList: [],
-            adsDataList: [], )
+            feedDataList: [...?feedList?.data],
+            adsDataList: [...?adsList?.data], )
         );
       }
     } catch (e) {
@@ -102,7 +103,7 @@ class ListCubit extends Cubit<ListState>{
   void toggleHideAds() {
     hideAds = !hideAds;
     if(state is ListLoaded){
-      emit((state as ListLoaded).copyWith(hideAds: hideAds));
+      emit((state as ListLoaded).copyWith());
     }
   }
 }

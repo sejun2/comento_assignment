@@ -39,12 +39,9 @@ class ListLoaded extends ListState{
 
     currentAdsPage = adsList?.currentPage ?? 0;
     adsPageLimit = adsList?.lastPage ?? 0;
-
-    feedDataList?.addAll(feedList?.data ?? []);
-    adsDataList?.addAll(adsList?.data ?? []);
   }
 
-  ListLoaded copyWith({FeedList? feedList, AdsList? adsList, List<FeedData>? feedDataList, List<AdsData>? adsDataList, bool? isProcess, bool? hideAds}){
+  ListLoaded copyWith({FeedList? feedList, AdsList? adsList, List<FeedData>? feedDataList, List<AdsData>? adsDataList, bool? isProcess,}){
     return ListLoaded(feedList: feedList ?? this.feedList, adsList: adsList ?? this.adsList, feedDataList: feedDataList ?? this.feedDataList, adsDataList: adsDataList ?? this.adsDataList,
       isProcess: isProcess ?? this.isProcess,
     );
