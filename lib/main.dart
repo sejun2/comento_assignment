@@ -21,12 +21,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return MultiBlocProvider(
         providers: [
           BlocProvider<ListCubit>(create: (context) => ListCubit(ListInitial()),),
-          // BlocProvider<DetailCubit>(create: (context) => DetailCubit(DetailInitial()), ),
         ],
         child: MaterialApp(
           theme: ThemeData(

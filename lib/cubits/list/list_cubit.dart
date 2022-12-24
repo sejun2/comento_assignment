@@ -16,9 +16,15 @@ class ListCubit extends Cubit<ListState>{
 
   final ComentoRepository _comentoRepository = GetIt.I.get<ComentoRepository>(instanceName: 'ComentoRepositoryImpl');
 
+  /// 서비스에서 제공하는 모든 카테고리 목록 list
   List<CategoryBean?> filterCategoryList = [];
+
   FeedOrdering ordering = FeedOrdering.ASC;
+
+  /// 카테고리 filter 여부를 저장하는 hashmap
   HashMap<CategoryBean, bool> categoryFilterHashMap = HashMap<CategoryBean, bool>();
+
+  /// 광고 숨김 여부
   bool hideAds = false;
 
   ListCubit(super.initialState) {
@@ -34,6 +40,9 @@ class ListCubit extends Cubit<ListState>{
     });
   }
 
+  /// 피드, 광고 리스트를 받아오는 함수
+  /// 현재 state 가 ListLoaded 라면 이미 데이터를 한번 받아온 상태로 목록을 더 불러오는 로직을 수행한다.
+  /// 현재 state 가 ListLoaded 가 아니라면 첫목록을 불러오는 로직을 수행한다.
   Future<void> fetchList() async{
     //make categories for request
     final categoryRequest = <CategoryBean>[];
@@ -77,18 +86,22 @@ class ListCubit extends Cubit<ListState>{
     }
   }
 
+  /// 피드리스트를 받아오는 함수
   FutureOr<FeedList?> _fetchFeedList({required int page, String ord = 'asc', required List<CategoryBean> categories, int limit = 10} ) async{
     return await _comentoRepository.getFeedList(page: page, ord: ord, categories: categories, limit: limit);
   }
 
+  /// 광고리스트를 받아오는 함수
   FutureOr<AdsList?> _fetchAdsList({required int page, int limit = 4}) async{
     return await _comentoRepository.getAdsList(page: page, limit: limit);
   }
 
+  /// 서비스에서 제공하는 카테고리 목록을 받아오는 함수
   Future<FeedCategory?> _getFilterCategory() async{
     return await _comentoRepository.getFilterCategory();
   }
 
+  /// Ordering 요청 함수
   Future<void> requestOrdering(FeedOrdering ordering) async{
     if(this.ordering == ordering) return;
     this.ordering = ordering;
@@ -96,6 +109,7 @@ class ListCubit extends Cubit<ListState>{
     await fetchList();
   }
 
+  /// Filtering 요청 함수
   Future<void> requestFiltering(HashMap<CategoryBean, bool> map) async{
     emit(ListLoading());
     categoryFilterHashMap = map;

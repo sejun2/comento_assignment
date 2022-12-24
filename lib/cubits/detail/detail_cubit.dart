@@ -21,6 +21,7 @@ class DetailCubit extends Cubit<DetailState>{
     }
   }
 
+  /// 피드 상세정보를 받아오는 함수
   Future<FeedDetails?> _getFeedDetail(int id) async {
     return await _comentoRepository.getFeedDetail(id: id);
   }
