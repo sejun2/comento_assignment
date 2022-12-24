@@ -102,6 +102,13 @@ class ListCubit extends Cubit<ListState>{
   refresh() async{
 
   }
+
+  void toggleHideAds() {
+    if(state is ListLoaded){
+      bool currentHideAds = (state as ListLoaded).hideAds;
+      emit((state as ListLoaded).copyWith(hideAds: !currentHideAds));
+    }
+  }
 }
 
 enum FeedOrdering{

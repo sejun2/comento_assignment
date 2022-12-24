@@ -94,7 +94,7 @@ class _ListPageState extends State<ListPage> {
             itemBuilder: (context, index) {
 
               return Column(children: [
-                if (index % 3 == 0 && index != 0) FeedAdvertiseItemCard(adsData: state.adsDataList?.elementAt((index/4).toInt()), onTap: (){}),
+                if (index % 3 == 0 && index != 0 && !state.hideAds) FeedAdvertiseItemCard(adsData: state.adsDataList?.elementAt((index/4).toInt()), onTap: (){}),
                 FeedItemCard(feedData: state.feedDataList?.elementAt(index), filterCategoryList: context.read<ListCubit>().filterCategoryList, onTap: () {
                   Navigator.of(context).pushNamed(DetailPage.routeName, arguments: <String, Object?>{
                     'id': state.feedDataList?.elementAt(index).id,
@@ -114,6 +114,15 @@ class _ListPageState extends State<ListPage> {
           FeedSortButton(onTap: ()async{await context.read<ListCubit>().requestOrdering(FeedOrdering.ASC);}, isActive: context.watch<ListCubit>().ordering == FeedOrdering.ASC, title: '오름차순'),
           FeedSortButton(onTap: ()async{await context.read<ListCubit>().requestOrdering(FeedOrdering.DESC);}, isActive:context.watch<ListCubit>().ordering == FeedOrdering.DESC, title: '내림차순'),
           const Expanded(child: SizedBox.shrink(),),
+          BlocBuilder<ListCubit, ListState>(builder: (context, state){
+            if(state is ListLoaded) {
+              return FeedSquareButton(title: state.hideAds ? '광고 보이기' : '광고 가리기', onTap: () {
+                context.read<ListCubit>().toggleHideAds();
+              },);
+            }else{
+              return const SizedBox.shrink();
+            }
+          }),
           FeedSquareButton(title: '필터', onTap: (){
             final superContext = context;
             showDialog(
