@@ -1,3 +1,4 @@
+import 'package:comento_assignment/data/models/feed_details.dart';
 import 'package:flutter/cupertino.dart';
 
 @immutable
@@ -12,7 +13,9 @@ class DetailLoading extends DetailState{
 }
 
 class DetailLoaded extends DetailState{
+  final FeedDetails? feedDetails;
 
+  DetailLoaded({this.feedDetails});
 }
 
 class DetailError extends DetailState{
