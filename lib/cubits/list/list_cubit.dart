@@ -19,6 +19,7 @@ class ListCubit extends Cubit<ListState>{
   List<CategoryBean?> filterCategoryList = [];
   FeedOrdering ordering = FeedOrdering.ASC;
   HashMap<CategoryBean, bool> categoryFilterHashMap = HashMap<CategoryBean, bool>();
+  bool hideAds = false;
 
   ListCubit(super.initialState) {
     emit(ListLoading());
@@ -53,7 +54,7 @@ class ListCubit extends Cubit<ListState>{
         emit(ListLoaded(
             feedList: feedList,
             adsList: adsList, feedDataList: [...?currentState.feedDataList], adsDataList: [...?currentState.adsDataList]
-        , isProcess: false));
+        , isProcess: false, hideAds: hideAds));
       }else{ // Loaded 상태가 아니라면 - loadmore 하는것이 아닌 새롭게 load를 하는경우
         emit(ListLoading());
         final feedList = await _fetchFeedList(page: 1, ord: ordering.toPlainString(), categories: categoryRequest);
@@ -63,7 +64,7 @@ class ListCubit extends Cubit<ListState>{
             feedList: feedList,
             adsList: adsList,
             feedDataList: [],
-            adsDataList: [])
+            adsDataList: [], hideAds: hideAds)
         );
       }
     } catch (e) {
@@ -99,9 +100,9 @@ class ListCubit extends Cubit<ListState>{
   
   /// 광고 가리기/보이기 토글 함수
   void toggleHideAds() {
+    hideAds = !hideAds;
     if(state is ListLoaded){
-      bool currentHideAds = (state as ListLoaded).hideAds;
-      emit((state as ListLoaded).copyWith(hideAds: !currentHideAds));
+      emit((state as ListLoaded).copyWith(hideAds: hideAds));
     }
   }
 }

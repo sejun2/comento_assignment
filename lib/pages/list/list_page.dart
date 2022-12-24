@@ -116,15 +116,9 @@ class _ListPageState extends State<ListPage> {
           FeedSortButton(onTap: ()async{await context.read<ListCubit>().requestOrdering(FeedOrdering.DESC);}, isActive:context.watch<ListCubit>().ordering == FeedOrdering.DESC, title: '내림차순'),
           const Expanded(child: SizedBox.shrink(),),
           BlocBuilder<ListCubit, ListState>(builder: (context, state){
-            if(state is ListLoaded) {
-              return FeedSquareButton(title: state.hideAds ? '광고 보이기' : '광고 가리기', onTap: () {
+              return FeedSquareButton(title: context.watch<ListCubit>().hideAds ? '광고 보이기' : '광고 가리기', onTap: () {
                 context.read<ListCubit>().toggleHideAds();
               },);
-            }else{
-              return FeedSquareButton(title: '광고 가리기', onTap: () {
-                context.read<ListCubit>().toggleHideAds();
-              },);
-            }
           }),
           FeedSquareButton(title: '필터', onTap: (){
             final superContext = context;
