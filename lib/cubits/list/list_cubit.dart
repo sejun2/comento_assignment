@@ -54,7 +54,7 @@ class ListCubit extends Cubit<ListState>{
         emit(ListLoaded(
             feedList: feedList,
             adsList: adsList, feedDataList: [...?currentState.feedDataList], adsDataList: [...?currentState.adsDataList]
-        , isProcess: false, hideAds: hideAds));
+        , isProcess: false, ));
       }else{ // Loaded 상태가 아니라면 - loadmore 하는것이 아닌 새롭게 load를 하는경우
         emit(ListLoading());
         final feedList = await _fetchFeedList(page: 1, ord: ordering.toPlainString(), categories: categoryRequest);
@@ -64,7 +64,7 @@ class ListCubit extends Cubit<ListState>{
             feedList: feedList,
             adsList: adsList,
             feedDataList: [],
-            adsDataList: [], hideAds: hideAds)
+            adsDataList: [], )
         );
       }
     } catch (e) {
