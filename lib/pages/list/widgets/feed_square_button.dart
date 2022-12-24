@@ -8,10 +8,10 @@ class FeedSquareButton extends StatelessWidget {
   final borderRadius = const BorderRadius.all(Radius.circular(3));
   final titleStyle = TextStyle(fontFamily: ComentoFont.SPOQA_HAN_SANS, color: const Color(0xffADB5BD), fontSize: 13);
 
-  EdgeInsets? margin = const EdgeInsets.only(left: 10);
-  EdgeInsets? padding = const EdgeInsets.symmetric(vertical: 4, horizontal: 14);
+  EdgeInsets? margin;
+  EdgeInsets? padding;
 
-  FeedSquareButton({Key? key, required this.title, required this.onTap, this.margin, this.padding}) : super(key: key);
+  FeedSquareButton({Key? key, required this.title, required this.onTap, this.margin = const EdgeInsets.only(left: 10), this.padding = const EdgeInsets.symmetric(vertical: 4, horizontal: 14)}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
