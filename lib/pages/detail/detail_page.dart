@@ -35,6 +35,11 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        automaticallyImplyLeading: false,
+        leading: IconButton(onPressed: (){
+          Navigator.of(context).pop();
+        }, icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black54,)),
       ),
       body: SafeArea(
         child: BlocConsumer<DetailCubit, DetailState>(
@@ -46,7 +51,7 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       PostCard(feedDetails: state.feedDetails),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.only(top: 16, bottom: 4, right: 16, left: 16),
                         child: RichText(text: TextSpan(
                           children: [
                             TextSpan(text: '답변', style: TextStyle(color: const Color(0xff495057),fontFamily: ComentoFont.SPOQA_HAN_SANS, fontSize: 16 ),),
@@ -71,7 +76,6 @@ class _DetailPageState extends State<DetailPage> {
             }
           },
           listener: (BuildContext context, Object? state) {  },
-
         ),
       ),
     );
