@@ -2,7 +2,7 @@ import 'package:comento_assignment/utils/comento_font.dart';
 import 'package:flutter/material.dart';
 
 class FeedCheckboxTile extends StatefulWidget{
-   bool isChecked;
+  bool isChecked;
   final String title;
   final void Function(bool? bool) onChanged;
 
