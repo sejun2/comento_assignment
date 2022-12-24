@@ -96,7 +96,7 @@ class _ListPageState extends State<ListPage> {
               return Column(children: [
                 if (index % 3 == 0 && index != 0) FeedAdvertiseItemCard(adsData: state.adsDataList?.elementAt((index/4).toInt()), onTap: (){}),
                 FeedItemCard(feedData: state.feedDataList?.elementAt(index), filterCategoryList: context.read<ListCubit>().filterCategoryList, onTap: () {
-                  Navigator.of(context).pushNamed(DetailPage.routeName, arguments: {
+                  Navigator.of(context).pushNamed(DetailPage.routeName, arguments: <String, Object?>{
                     'id': state.feedDataList?.elementAt(index).id,
                   });
 
