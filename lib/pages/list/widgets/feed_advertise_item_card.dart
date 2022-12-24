@@ -1,6 +1,7 @@
 import 'package:comento_assignment/utils/comento_font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../data/models/ads_list.dart';
 
@@ -34,7 +35,7 @@ class FeedAdvertiseItemCard extends StatelessWidget {
                 Image.network(
                     imgBaseUrl+(adsData?.img.toString() ?? ''),
                     loadingBuilder: (context, child, loadingProgress) {
-                      if(loadingProgress != null) return const Center(child: CircularProgressIndicator(),);
+                      if(loadingProgress != null) return Center(child: LottieBuilder.asset('assets/images/progress_indicator_lottie.json', width: 50, height: 50,),);
                       return child;
                       },
                     errorBuilder: (context, error, stackTrace) {

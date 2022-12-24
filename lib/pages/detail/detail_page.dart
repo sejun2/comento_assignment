@@ -6,6 +6,7 @@ import 'package:comento_assignment/utils/comento_font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class DetailPage extends StatefulWidget {
   static const routeName = 'DETAIL_PAGE';
@@ -70,7 +71,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               );
             }else if(state is DetailLoading){
-              return const Center(child: CircularProgressIndicator(),);
+              return Center(child: LottieBuilder.asset('assets/images/progress_indicator_lottie.json', width: 50, height: 50,),);
             }else{
               return const Center(child: Text('Something went wrong...'),);
             }

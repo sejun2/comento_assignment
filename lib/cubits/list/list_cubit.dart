@@ -56,7 +56,7 @@ class ListCubit extends Cubit<ListState>{
         , isProcess: false));
       }else{ // Loaded 상태가 아니라면 - loadmore 하는것이 아닌 새롭게 load를 하는경우
         emit(ListLoading());
-
+        Future.delayed(const Duration(milliseconds: 3000));
         final feedList = await _fetchFeedList(page: 1, ord: ordering.toPlainString(), categories: categoryRequest);
         final adsList = await _fetchAdsList(page: 1);
 

@@ -12,6 +12,7 @@ import 'package:comento_assignment/utils/comento_font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../cubits/list/list_state.dart';
 import '../../data/models/feed_category.dart';
@@ -69,7 +70,7 @@ class _ListPageState extends State<ListPage> {
                       ]
                   );
                 }else if( state is ListLoading){
-                  return const Center(child: CircularProgressIndicator(),);
+                  return Center(child: LottieBuilder.asset('assets/images/progress_indicator_lottie.json', width: 50, height: 50,),);
                 }else{
                   return const Center(child: Text('Something went wrong...'));
                 }
