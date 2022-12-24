@@ -32,15 +32,18 @@ class FeedAdvertiseItemCard extends StatelessWidget {
                 Text('Sponsored', style: sponsoredStyle,),
                 const SizedBox(height: 19,),
                 if(adsData?.img?.isNotEmpty ?? false)
-                Image.network(
-                    imgBaseUrl+(adsData?.img.toString() ?? ''),
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if(loadingProgress != null) return Center(child: LottieBuilder.asset('assets/images/progress_indicator_lottie.json', width: 50, height: 50,),);
-                      return child;
-                      },
-                    errorBuilder: (context, error, stackTrace) {
-                  return Container(color: const Color(0xffE1E4E7),child: Center(child: Text('이미지를 불러올 수 없습니다', style: TextStyle(fontFamily: ComentoFont.SPOQA_HAN_SANS, fontSize: 16),)),);
-                }),
+                Align(
+                  alignment: Alignment.center,
+                  child: Image.network(
+                      imgBaseUrl+(adsData?.img.toString() ?? ''),
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if(loadingProgress != null) return Center(child: LottieBuilder.asset('assets/images/progress_indicator_lottie.json', width: 50, height: 50,),);
+                        return child;
+                        },
+                      errorBuilder: (context, error, stackTrace) {
+                    return Container(color: const Color(0xffE1E4E7),child: Center(child: Text('이미지를 불러올 수 없습니다', style: TextStyle(fontFamily: ComentoFont.SPOQA_HAN_SANS, fontSize: 16),)),);
+                  }),
+                ),
                 const SizedBox(height: 19,),
                 //title section
                 Text(adsData?.title.toString() ?? 'title', maxLines: 2, overflow: TextOverflow.ellipsis, style: titleStyle,),
