@@ -45,5 +45,15 @@ void main() async{
 
       expect(() async => await comentoRepository.getFilterCategory(), throwsA(isA<DioError>()));
     });
+
+    test('when getFilterCategory is timed out then throws dioError', () {
+      const getCategoryFilterRoute = '/api/category';
+
+      dioAdapter.onGet(getCategoryFilterRoute  ,(server) {
+        server.throws(200, DioError(requestOptions: RequestOptions(path: getCategoryFilterRoute)), delay: const Duration(seconds: 30 ));
+      },);
+
+      expect(() async => await comentoRepository.getFilterCategory(), throwsA(isA<DioError>()));
+    });
   });
 }
