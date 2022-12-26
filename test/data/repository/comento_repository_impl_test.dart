@@ -50,7 +50,7 @@ void main() async{
       const getCategoryFilterRoute = '/api/category';
 
       dioAdapter.onGet(getCategoryFilterRoute  ,(server) {
-        server.throws(200, DioError(requestOptions: RequestOptions(path: getCategoryFilterRoute)), delay: const Duration(seconds: 30 ));
+        server.throws(200, DioError(requestOptions: RequestOptions(path: getCategoryFilterRoute)), delay: const Duration(seconds:3));
       },);
 
       expect(() async => await comentoRepository.getFilterCategory(), throwsA(isA<DioError>()));
