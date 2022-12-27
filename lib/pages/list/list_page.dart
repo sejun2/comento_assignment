@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:comento_assignment/cubits/list/list_cubit.dart';
@@ -5,6 +6,7 @@ import 'package:comento_assignment/pages/detail/detail_page.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_advertise_item_card.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_checkbox_tile.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_item_card.dart';
+import 'package:comento_assignment/pages/list/widgets/feed_search_widget.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_sort_button.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_square_button.dart';
 import 'package:comento_assignment/pages/list/widgets/feed_submit_button.dart';
@@ -28,6 +30,9 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   final scrollController = ScrollController();
+  final searchController = TextEditingController();
+  final searchFocusNode = FocusNode();
+  Timer? _searchDebounce;
 
   @override
   void initState() {
@@ -43,6 +48,20 @@ class _ListPageState extends State<ListPage> {
         context.read<ListCubit>().fetchList();
       }
     });
+
+    searchController.addListener(() {
+      if (_searchDebounce?.isActive ?? false) _searchDebounce?.cancel();
+
+      final currentText = searchController.text;
+
+      _searchDebounce = Timer(const Duration(milliseconds: 300), () {
+        _onSearchEvent(currentText);
+      });
+    });
+  }
+
+  void _onSearchEvent(String text) {
+    context.read<ListCubit>().search(text);
   }
 
   @override
@@ -58,6 +77,7 @@ class _ListPageState extends State<ListPage> {
         child: Column(
           children: [
             _buildControllerSection(),
+            _buildSearchSection(),
             Container(color: const Color(0xffE1E4E7), height: 1,),
             Expanded(
               child: BlocConsumer<ListCubit, ListState>(builder: (context, state){
@@ -91,25 +111,38 @@ class _ListPageState extends State<ListPage> {
 
   Expanded _buildMainListSection(ListLoaded state) {
     return Expanded(
-        child: ListView.separated(
-            separatorBuilder: (context, index){
-              return Container(height: 10, color: CupertinoColors.systemGrey6,) ;
-            },
-            controller: scrollController,
-            itemCount: (state.feedDataList?.length ?? 0) ,
-            itemBuilder: (context, index) {
+        child: Builder(
+          builder: (context) {
+            final searchText = state.searchText;
 
-              return Column(children: [
-                if (index % 3 == 0 && index != 0 && !context.watch<ListCubit>().hideAds) FeedAdvertiseItemCard(adsData: state.adsDataList?.elementAt((index/4).toInt()), onTap: (){}),
-                FeedItemCard(feedData: state.feedDataList?.elementAt(index), filterCategoryList: context.read<ListCubit>().filterCategoryList, onTap: () {
-                  Navigator.of(context).pushNamed(DetailPage.routeName, arguments: <String, Object?>{
-                    'id': state.feedDataList?.elementAt(index).id,
-                  });
+            // origin 리스트에서 searchText를 가진 list를 filtering 한다
+            final filteredFeedDataList = [...?state.feedDataList].where((e) {
+              if(searchText?.isNotEmpty ?? false){
+                return e.title?.contains(searchText!) ?? false;
+              }else{
+                return true;
+              }
+            }).toList();
 
-                  debugPrint('id :: ${state.feedDataList?.elementAt(index).id}');
-                },),
-              ],);
-            }));
+            return ListView.separated(
+                separatorBuilder: (context, index){
+                  return Container(height: 10, color: CupertinoColors.systemGrey6,) ;
+                },
+                controller: scrollController,
+                itemCount: (filteredFeedDataList.length) ,
+                itemBuilder: (context, index) {
+
+                  return Column(children: [
+                    if (index % 3 == 0 && index != 0 && !context.watch<ListCubit>().hideAds) FeedAdvertiseItemCard(adsData: state.adsDataList?.elementAt((index/4).toInt()), onTap: (){}),
+                    FeedItemCard(feedData: filteredFeedDataList.elementAt(index), filterCategoryList: context.read<ListCubit>().filterCategoryList, onTap: () {
+                      Navigator.of(context).pushNamed(DetailPage.routeName, arguments: <String, Object?>{
+                        'id': filteredFeedDataList.elementAt(index).id,
+                      });
+                    },),
+                  ],);
+                });
+          }
+        ));
   }
 
   Padding _buildControllerSection() {
@@ -182,4 +215,9 @@ class _ListPageState extends State<ListPage> {
       ),
     );
   }
+
+  FeedSearchWidget _buildSearchSection(){
+    return FeedSearchWidget(textEditingController: searchController, focusNode: searchFocusNode,);
+  }
+
 }

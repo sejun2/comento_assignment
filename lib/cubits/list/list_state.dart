@@ -27,13 +27,15 @@ class ListLoaded extends ListState{
   int currentAdsPage = 0;
   int adsPageLimit = 0;
 
+  String? searchText = '';
+
   /// FeedList를 더 로드할 수 있는지 여부
   bool get canLoadMore =>  currentFeedPage < feedPageLimit;
 
   /// 무언가 처리중인지 여부
   bool isProcess = false;
 
-  ListLoaded({required this.feedList, this.adsList, this.feedDataList, this.adsDataList, this.isProcess = false,}){
+  ListLoaded({required this.feedList, this.adsList, this.feedDataList, this.adsDataList, this.isProcess = false, this.searchText}){
     print('listloaded emit');
 
     currentFeedPage = feedList?.currentPage ?? 0;
@@ -43,9 +45,9 @@ class ListLoaded extends ListState{
     adsPageLimit = adsList?.lastPage ?? 0;
   }
 
-  ListLoaded copyWith({FeedList? feedList, AdsList? adsList, List<FeedData>? feedDataList, List<AdsData>? adsDataList, bool? isProcess,}){
+  ListLoaded copyWith({FeedList? feedList, AdsList? adsList, List<FeedData>? feedDataList, List<AdsData>? adsDataList, bool? isProcess, String? searchText}){
     return ListLoaded(feedList: feedList ?? this.feedList, adsList: adsList ?? this.adsList, feedDataList: feedDataList ?? this.feedDataList, adsDataList: adsDataList ?? this.adsDataList,
-      isProcess: isProcess ?? this.isProcess,
+      isProcess: isProcess ?? this.isProcess, searchText: searchText ?? this.searchText
     );
   }
 

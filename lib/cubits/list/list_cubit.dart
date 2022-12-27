@@ -27,6 +27,9 @@ class ListCubit extends Cubit<ListState>{
   /// 광고 숨김 여부
   bool hideAds = false;
 
+  /// Search할 단어
+  String? searchText;
+
   ListCubit(super.initialState) {
     emit(ListLoading());
     _getFilterCategory().then((value) {
@@ -66,7 +69,8 @@ class ListCubit extends Cubit<ListState>{
         emit((state as ListLoaded).copyWith(
           feedList: feedList, adsList: adsList, isProcess: false,
           adsDataList: [...?currentState.adsDataList, ...?adsList?.data],
-          feedDataList: [...?currentState.feedDataList, ...?feedList?.data]
+          feedDataList: [...?currentState.feedDataList, ...?feedList?.data],
+          searchText: searchText
         ));
       }else{ // Loaded 상태가 아니라면 - loadmore 하는것이 아닌 새롭게 load를 하는경우
         emit(ListLoading());
@@ -77,7 +81,9 @@ class ListCubit extends Cubit<ListState>{
             feedList: feedList,
             adsList: adsList,
             feedDataList: [...?feedList?.data],
-            adsDataList: [...?adsList?.data], )
+            adsDataList: [...?adsList?.data],
+            searchText: searchText,
+        )
         );
       }
     } catch (e) {
@@ -121,6 +127,17 @@ class ListCubit extends Cubit<ListState>{
     hideAds = !hideAds;
     if(state is ListLoaded){
       emit((state as ListLoaded).copyWith());
+    }
+  }
+
+  /// 제목 검색하는 함수
+  /// TODO 본문, 글쓴이 검색 추가
+  void search(String text) {
+    searchText = text;
+
+    if(state is ListLoaded) {
+      final currentState = (state as ListLoaded);
+      emit(currentState.copyWith(searchText: text));
     }
   }
 }
