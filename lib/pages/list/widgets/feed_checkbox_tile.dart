@@ -1,7 +1,7 @@
 import 'package:comento_assignment/utils/comento_font.dart';
 import 'package:flutter/material.dart';
 
-class FeedCheckboxTile extends StatefulWidget{
+class FeedCheckboxTile extends StatefulWidget implements Comparable<FeedCheckboxTile>{
   bool isChecked;
   final String title;
   final void Function(bool? bool) onChanged;
@@ -11,6 +11,10 @@ class FeedCheckboxTile extends StatefulWidget{
   @override
   State<FeedCheckboxTile> createState() => _FeedCheckboxTileState();
 
+  @override
+  int compareTo(other) {
+    return title.compareTo(other.title);
+  }
 }
 
 class _FeedCheckboxTileState extends State<FeedCheckboxTile> {
@@ -50,5 +54,6 @@ class _FeedCheckboxTileState extends State<FeedCheckboxTile> {
       ],
     );
   }
+
 }
 

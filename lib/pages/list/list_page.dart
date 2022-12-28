@@ -169,7 +169,7 @@ class _ListPageState extends State<ListPage> {
                     return FeedCheckboxTile(isChecked: cacheCategoryFilterHashMap[element] == true, title: element.name ?? '', onChanged: (value){
                       cacheCategoryFilterHashMap[element] = value ?? false;
                     });
-                  }).toList();
+                  }).toList()..sort();
 
               return AlertDialog(
               contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
